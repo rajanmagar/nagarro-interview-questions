@@ -136,3 +136,47 @@ const multiplyBy2 = (num) => {
 multiply(10);
 ▶ 80
 ```
+---
+
+###### 6. Output based question. What will be the output of below code and why?
+ ```javascript
+const object = {
+  message: "Hello, World!",
+  logMessage() {
+    console.log(this.message);
+  }
+};
+setTimeout(object.logMessage, 1000);
+```
+- A: `undefined`
+- B: `null`
+- C: `Hello, World!`
+- D: `ReferenceError`
+#### Answer:
+<details><summary>I added the answer in the **collapsed sections** below, simply click on it to expand it.</summary>
+<b>A</b> i.e. undefined
+<p>Reason: setTimeout is taking <code>object.logMessage</code> method as regular function where this point to global scope i.e. <code>window</code> object.</p>
+</details>
+---
+
+###### 7. Follow up question. How will you fix previous code?
+```javascript
+const object = {
+  message: "Hello, World!",
+  logMessage() {
+    console.log(this.message);
+  }
+};
+setTimeout(object.logMessage, 1000);
+```
+#### Answer:
+By simply adding `Arrow Function` (=>) inside setTimeout, we convert reular funtion to arrow function.
+```javascript
+const object = {
+  message: "Hello, World!",
+  logMessage() {
+    console.log(this.message);
+  }
+};
+setTimeout(() => object.logMessage(), 1000);
+```
