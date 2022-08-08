@@ -109,7 +109,29 @@ const multiplyBy2 = (num, fn) => {
   setTimeout(() => {
     fn(undefined, num * 2);
   }, 400)
-  return num * 2;
+}
+multiply(10);
+▶ 80
+```
+---
+
+###### 5. Follow up question. How will you fix callback hell?
+#### Answer:
+Refactoring the previous code example by using Promise.
+```javascript
+const multiply = (num) => {
+  multiplyBy2(num).then((data) => {
+    multiplyBy2(data).then((data) => {
+      multiplyBy2(data).then((data) => console.log(data))
+    }).catch(err => console.log(err))
+  }).catch(err => console.log(err))
+}
+const multiplyBy2 = (num) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(num * 2);
+    }, 400)
+  })
 }
 multiply(10);
 ▶ 80
