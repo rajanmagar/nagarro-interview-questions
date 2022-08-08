@@ -48,3 +48,69 @@ While Arrow function in events will point to global scope hence return window ob
 [Element].addEventListener("click", () => console.log(this))
 ▶ Window
 ```
+---
+###### 2. In `Destructuring` objects, print out any two property from a nested object.
+```javascript
+const user = {
+  name: "Rajan",
+  address: {
+    street: "Punjab"
+  }
+}
+```
+#### Answer:
+```javascript
+const { name, address: { street } } = user;
+console.log(name, street);
+▶ Rajan Punjab
+```
+---
+
+###### 3. This was a followup question the previous question. Let's the `user` object is coming from an API and for one case, this user object is null. This will breake the application, so how will you fix it?
+```javascript
+const user = null;
+const { name, address: { street } } = user;
+console.log(name, street);
+▶ Cannot read properties of null
+```
+#### Answer:
+By using `spread` (...) operator.
+```javascript
+const { name, address } = {...user};
+const { street } = {...address};
+console.log(name, street);
+▶ undefined undefined
+```
+--- 
+
+###### 4. What is `callback hell`? Write an example of it.
+#### Answer:
+`Callback` hell is when you nest things inside of each other because they all depend on the previous callback to being called before it can then go ahead and run, when you need to run things in sequence, one after the other.
+
+```javascript
+const multiply = (num) => {
+  multiplyBy2(num, (err, res) => {
+    if(!err) {
+      multiplyBy2(res, (err, res1) => {
+        if(!err) {
+          multiplyBy2(res1, (err, res2) => {
+            console.log(res2);
+          })
+        } else {
+          console.log("Error in Second call")
+        }
+      })
+    } else {
+      console.log("Error in first call ")
+    }
+  });
+}
+const multiplyBy2 = (num, fn) => {
+  setTimeout(() => {
+    fn(undefined, num * 2);
+  }, 400)
+  return num * 2;
+}
+multiply(10);
+▶ 80
+```
