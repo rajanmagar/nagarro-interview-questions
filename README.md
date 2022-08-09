@@ -180,3 +180,33 @@ const object = {
 };
 setTimeout(() => object.logMessage(), 1000);
 ```
+
+---
+
+###### 7. Create custom `debounce` using react hooks.
+
+#### Answer:
+Make the customHook.js 
+```javascript
+import { useState, useEffect } from "react";
+export const useDebounce = (inputValue, delay = 400) => {
+  const [ debounceValue, setDebounceValue ] = useState(inputValue);
+  useEffect(() => {
+    const timer = setTimeout(() => setDebounceValue(inputValue), delay);
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [inputValue, delay]);
+
+  return debounceValue;
+};
+```
+Then import it to the App.js file.
+```javascript
+import { useDebounce } from "./customHook";
+
+export default function App() {
+  const [ value, setValue ] = useState("");
+  const debounceValue = useDebounce(value);
+}
+```
